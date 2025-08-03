@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "declaration": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "es2017",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "baseUrl": "./src", // Enable Type Checking (Optional but helpful). This will help avoid path and type issues in the future.
+    "incremental": true,
+    "strict": true,
+	"strictPropertyInitialization": false
+  },
+  "include": ["src/**/*", "../inventory-frontend/src/utils/dateUtils.js"],
+  "exclude": ["node_modules"]
+}
