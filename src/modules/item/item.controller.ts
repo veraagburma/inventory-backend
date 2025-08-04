@@ -11,10 +11,10 @@ export class ItemController {
 
   @Post()
   create(@Body() createItemDto: CreateItemDto) {
-    console.log('CTR received:', createItemDto);
+    console.log('==========> CreateDto received:', createItemDto);
     createItemDto.createddate = new Date();
     createItemDto.updateddate = new Date();
-    console.log('Set Date:', createItemDto);
+    console.log('==========> CreateDto afterSet Date:', createItemDto);
     return this.itemService.create(createItemDto);
   }
   
@@ -34,8 +34,9 @@ export class ItemController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: number, @Body() updateDto: UpdateItemDto) {
+  update(@Param('id') id: string, @Body() updateDto: UpdateItemDto) {
+    console.log("==========> UpdateItemDto in: " + updateDto.itemcode + " " + updateDto.itemcategory);
     updateDto.updateddate = new Date();
-    return this.itemService.update(+id, updateDto);
+    return this.itemService.update(id, updateDto);
   }
 }

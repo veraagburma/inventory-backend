@@ -1,5 +1,6 @@
 
-import { Entity, Column, PrimaryGeneratedColumn, PrimaryColumn } from 'typeorm';
+import { Entity, Column, PrimaryColumn, OneToMany } from 'typeorm';
+import { ItemVariant } from 'modules/item-variant/entities/itemvariant.entity';
 
 @Entity()
 export class Item {
@@ -15,12 +16,6 @@ export class Item {
   @Column()
   itemremarks : string;
 
-  // @Column({ type: 'simple-json', nullable: true })
-  // datelisted : {
-  //   platform?: string;
-  //   listeddate?: Date;
-  // };
-
   @Column()
   createdby: string;
 
@@ -32,4 +27,7 @@ export class Item {
 
   @Column({ type: 'timestamp' })
   updateddate: Date;
+
+  @OneToMany(() => ItemVariant, variant => variant.item, { cascade: true })
+  variants: ItemVariant[];
 }

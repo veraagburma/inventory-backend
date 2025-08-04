@@ -30,7 +30,11 @@ export class ItemService {
   }
 
   async findAll(): Promise<Item[]> {
-    return this.itemRepository.find();
+    return this.itemRepository.find({
+      order: {
+        itemcode: 'ASC',
+      }
+    });
   }
 
   async findOne(id: string): Promise<Item> {
@@ -41,9 +45,10 @@ export class ItemService {
     return item;
 }
 
-  async update(id: number, updateDto: UpdateItemDto) {
+  async update(id: string, updateDto: UpdateItemDto) {
     // To prevent Created Date and By being updated
-    console.log("Did I come here? ");
+    console.log("==========> UpdateItemDto in Service: " + updateDto.itemcode + " " + updateDto.itemcategory);
+
 
     await this.itemRepository.update(id, updateDto);
     //return Promise<Item>;

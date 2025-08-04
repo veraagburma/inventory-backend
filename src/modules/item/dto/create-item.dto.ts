@@ -6,13 +6,6 @@ export class CreateItemDto {
   itemname ?: string;
   itemremarks ?: string;
   
-  // @IsOptional()
-  // @IsObject()
-  // datelisted?: {
-  //   country?: string;
-  //   tags?: string[];
-  // };
-  
   createdby?: string;
   @IsOptional()
   @IsDateString()
