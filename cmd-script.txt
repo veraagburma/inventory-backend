@@ -1,0 +1,1 @@
+Get-ChildItem -Recurse | ` Where-Object { $_.Name -match "transaction" } | ` Rename-Item -NewName { $_.Name -replace "transaction", "sales-order" }
