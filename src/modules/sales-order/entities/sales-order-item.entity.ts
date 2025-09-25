@@ -3,7 +3,7 @@ import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 't
 import { SalesOrder } from './sales-order.entity';
 import { ItemVariant } from 'modules/item-variant/entities/itemvariant.entity';
 
-@Entity('sales_order_item')
+@Entity('SalesOrderItem')
 export class SalesOrderItem {
   @PrimaryGeneratedColumn()
   soItemid: number;
@@ -16,7 +16,7 @@ export class SalesOrderItem {
   salesorderid: string;
 
   @ManyToOne(() => ItemVariant)
-  @JoinColumn({ name: 'variantId', referencedColumnName: 'variantid' })
+  @JoinColumn({ name: 'sku', referencedColumnName: 'sku' })
   variant: ItemVariant;
 
   // ItemVariant's primary key is SKU

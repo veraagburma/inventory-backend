@@ -7,6 +7,7 @@ import { SupplierModule } from './modules/supplier/supplier.module';
 import { PlatformModule } from './modules/platform/platform.module';
 import { ItemModule } from './modules/item/item.module';
 import { ItemVariantModule } from './modules/item-variant/itemvariant.module';
+import { SalesOrderModule } from 'modules/sales-order/sales-order.module';
 
 @Module({
 
@@ -16,6 +17,7 @@ import { ItemVariantModule } from './modules/item-variant/itemvariant.module';
     PlatformModule,
     ItemModule,
     ItemVariantModule,
+    SalesOrderModule,
   ],
   controllers: [AppController]
   

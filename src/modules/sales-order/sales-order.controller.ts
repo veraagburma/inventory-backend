@@ -3,17 +3,19 @@ import { SalesOrderService } from './sales-order.service';
 import { CreateSalesOrderDto } from './dto/create-sales-order.dto';
 import { UpdateSalesOrderDto } from './dto/update-sales-order.dto';
 
-@Controller('sales-order')
+@Controller('salesorder')
 export class SalesOrderController {
   constructor(private readonly soService: SalesOrderService) {}
 
   @Get()
   findAll() {
+        console.log('==========> findAll received:');
     return this.soService.findAll();
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
+    console.log('==========> findOne received:');
     return this.soService.findOne(+id);
   }
 
