@@ -20,6 +20,7 @@ export class ItemVariantController {
   
   @Get()
   findAll(): Promise<ItemVariant[]> {
+    console.log('==========> CreateDto received:');
     return this.itemVariantService.findAll();
   }
 
@@ -35,7 +36,7 @@ export class ItemVariantController {
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateDto: UpdateItemVariantDto) {
-    console.log("==========> UpdateItemVariantDto in: " + updateDto.itemcode + " " + updateDto.itemcategory);
+    console.log("==========> UpdateItemVariantDto in: " + updateDto.itemcode + " " + updateDto.itemremarks);
     updateDto.updateddate = new Date();
     return this.itemVariantService.update(id, updateDto);
   }

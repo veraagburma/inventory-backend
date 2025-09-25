@@ -47,10 +47,10 @@ export class ItemVariantService {
 
   async update(id: string, updateDto: UpdateItemVariantDto) {
     // To prevent Created Date and By being updated
-    console.log("==========> UpdateItemVariantDto in Service: " + updateDto.itemcode + " " + updateDto.itemcategory);
+    console.log("==========> UpdateItemVariantDto in Service: " + updateDto.sku + " " + updateDto.itemcode);
 
 
-    await this.itemRepository.update(id, updateDto);
+    // await this.itemRepository.update(id, updateDto);
     //return Promise<ItemVariant>;
   }
 

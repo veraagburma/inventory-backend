@@ -2,10 +2,11 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm';
 import { Item } from '../../item/entities/item.entity'
 
-@Entity()
+@Entity('ItemVariant')
 export class ItemVariant {
+  
   @PrimaryGeneratedColumn()
-  variantid: number;
+  sku: string;
   
   @Column({ name: 'itemcode' })
   itemcode: string;
@@ -13,9 +14,6 @@ export class ItemVariant {
   @ManyToOne(() => Item, item => item.variants, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'itemcode', referencedColumnName: 'itemcode' })
   item: Item;
-
-  @Column({ unique: true })
-  sku: string;
 
   @Column({ name: 'size' })
   size: string;
@@ -26,20 +24,17 @@ export class ItemVariant {
   @Column({ name: 'barcode' })
   barcode: string;
 
-  @Column({ name: 'weight_grams' })
-  weight_grams: number;
+  // @Column({ name: 'weight_grams' })
+  // weight_grams: number;
 
-  @Column({ name: 'volume_cm3' })
-  volume_cm3: number;
+  // @Column({ name: 'volume_cm3' })
+  // volume_cm3: number;
 
   @Column({ type: 'numeric', precision: 10, scale: 2 })
   unitprice: number;
 
   @Column({ name: 'itemremarks' })
   itemremarks: string;
-
-  @Column({ type: 'simple-json', nullable: true })
-  listingdetails: Record<string, any>; // e.g., { Shopee: "Listed", TikTok: "Pending" }
 
   @Column()
   createdby: string;

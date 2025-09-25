@@ -1,11 +1,15 @@
 import { IsDateString, IsOptional } from 'class-validator';
 
 export class CreateItemVariantDto {
-  itemcode : string;
-  itemcategory ?: string;
-  itemname ?: string;
-  itemremarks ?: string;
-  
+  sku : string;
+  itemcode ?: string;
+  size ?: number;
+  color ?: string;
+  barcode ?: string;
+
+  unitprice: number;
+  itemremarks: string;
+
   createdby?: string;
   @IsOptional()
   @IsDateString()
