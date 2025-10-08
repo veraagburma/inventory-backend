@@ -1,11 +1,11 @@
 
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Entity, Column, PrimaryColumn, OneToMany } from 'typeorm';
 import { SalesOrderItem } from './sales-order-item.entity'
 
-@Entity('SalesOrder')
+@Entity('salesorder')
 export class SalesOrder {
-  @PrimaryGeneratedColumn()
-  salesorderid: number;
+  @PrimaryColumn()
+  salesorderid: string;
 
   @Column()
   platformid: number; 
@@ -16,17 +16,20 @@ export class SalesOrder {
   @Column({ type: 'varchar', length: 20, default: 'Paid' })
   orderstatus: string;
 
-  @Column({ type: 'int' })
+  @Column({ type: 'numeric', precision: 12, scale: 2 })
   shippingfee: number;
 
-  @Column({ type: 'int' })
+  @Column({ type: 'numeric', precision: 12, scale: 2 })
   sellerrebate: number;
 
-  @Column({ type: 'int' })
+  @Column({ type: 'numeric', precision: 12, scale: 2 })
   platformrebate: number;
 
-  @Column({ type: 'int' })
+  @Column({ type: 'numeric', precision: 12, scale: 2 })
   bundlediscount: number;
+
+  @Column({ type: 'numeric', precision: 12, scale: 2 })
+  totalprice: number;
 
   @Column()
   createdby: string;
@@ -42,11 +45,10 @@ export class SalesOrder {
 
 
   // should  call salesorderitem? 
-  @OneToMany(() => SalesOrderItem, (soItem) => soItem.salesorderid, {
+  @OneToMany(() => SalesOrderItem, (item) => item.order, {
     cascade: true, // allow saving order with items in one call
     eager: true,   // optional: auto-load items with order
   })
-
   items: SalesOrderItem[];
 }
 

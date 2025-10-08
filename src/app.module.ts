@@ -23,5 +23,3 @@ import { SalesOrderModule } from 'modules/sales-order/sales-order.module';
   
 })
 export class AppModule {}
-
-

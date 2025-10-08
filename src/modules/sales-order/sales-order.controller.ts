@@ -9,14 +9,14 @@ export class SalesOrderController {
 
   @Get()
   findAll() {
-        console.log('==========> findAll received:');
+    console.log('==========> SalesOrderController findAll');
     return this.soService.findAll();
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    console.log('==========> findOne received:');
-    return this.soService.findOne(+id);
+    console.log('==========> SalesOrderController findOne:');
+    return this.soService.findOne(id);
   }
 
   @Post()
@@ -26,11 +26,11 @@ export class SalesOrderController {
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() dto: UpdateSalesOrderDto) {
-    return this.soService.update(+id, dto);
+    return this.soService.update(id, dto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.soService.remove(+id);
+    return this.soService.remove(id);
   }
 }

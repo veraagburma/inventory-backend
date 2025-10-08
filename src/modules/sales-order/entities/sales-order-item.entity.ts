@@ -3,14 +3,14 @@ import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 't
 import { SalesOrder } from './sales-order.entity';
 import { ItemVariant } from 'modules/item-variant/entities/itemvariant.entity';
 
-@Entity('SalesOrderItem')
+@Entity('salesorderitem')
 export class SalesOrderItem {
   @PrimaryGeneratedColumn()
-  soItemid: number;
+  soitemid: number;
 
-  @ManyToOne(() => SalesOrder, (so) => so.items, { onDelete: 'CASCADE' })
-  @JoinColumn({ name: 'sales_order_id' })
-  salesOrder: SalesOrder;
+  @ManyToOne(() => SalesOrder, (order) => order.items, { onDelete: 'CASCADE', })
+  @JoinColumn({ name: 'salesorderid' })
+  order: SalesOrder;
   
   @Column()
   salesorderid: string;
@@ -29,11 +29,11 @@ export class SalesOrderItem {
   @Column({ type: 'numeric', precision: 12, scale: 2 })
   unitprice: number; // selling price
 
-  @Column({ type: 'numeric' })
-  discount: number;
-
   @Column({ type: 'numeric', precision: 12, scale: 2 })
-  totalprice: number; // quantity * unitPrice (store for immutability)
+  itemdiscount: number;
+
+  @Column()
+  remarks: string;
 
   @Column()
   createdby: string;

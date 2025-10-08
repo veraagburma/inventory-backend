@@ -5,81 +5,72 @@ import { SalesOrder } from './entities/sales-order.entity';
 import { SalesOrderItem } from './entities/sales-order-item.entity';
 import { CreateSalesOrderDto } from './dto/create-sales-order.dto';
 import { ItemVariant } from '../item-variant/entities/itemvariant.entity'
+import { UpdateSalesOrderDto } from './dto/update-sales-order.dto';
 
 @Injectable()
+
 export class SalesOrderService {
   constructor(
-    @InjectRepository(SalesOrder) private soRepo: Repository<SalesOrder>,
-    @InjectRepository(SalesOrderItem) private soiRepo: Repository<SalesOrderItem>,
-    @InjectRepository(ItemVariant) private variantRepo: Repository<ItemVariant>,
-    private dataSource: DataSource,
+    @InjectRepository(SalesOrder)
+    private readonly salesOrderRepository: Repository<SalesOrder>,
+
+    @InjectRepository(SalesOrderItem)
+    private readonly salesOrderItemRepository: Repository<SalesOrderItem>,
   ) {}
 
-  async findAll(): Promise<SalesOrder[]> {
-    return this.soRepo.find({ relations: ['items'] });
-  }
-
-  async findOne(salesorderid: number): Promise<SalesOrder> {
-    const so = await this.soRepo.findOne({ where: { salesorderid }, relations: ['items'] });
-    if (!so) throw new NotFoundException('Sales order not found');
-    return so;
-  }
-
-  // Create sales order with items, update inventory (example), transactional
+  // Create a new Sales Order with items
   async create(createDto: CreateSalesOrderDto): Promise<SalesOrder> {
-    // Basic validation: items must exist and have enough stock (optional)
-    const queryRunner = this.dataSource.createQueryRunner();
-    await queryRunner.connect();
-    await queryRunner.startTransaction();
+    const { items, ...orderData } = createDto;
 
-    try {
-      // Validate variants and compute totals
-      const itemsEntities: SalesOrderItem[] = [];
-      for (const it of createDto.items) {
-        // const variant = await this.variantRepo.findOne({ where: { variantid: it.sku }});
-        // if (!variant) throw new NotFoundException(`ItemVariant ${it.sku} not found`);
+    // Create order
+    const order = this.salesOrderRepository.create(orderData);
+    await this.salesOrderRepository.save(order);
 
-        // Optional: check stock (if you maintain stock)
-        // if (variant.qty < it.quantity) throw new ConflictException('Insufficient stock');
-
-        const soi = new SalesOrderItem();
-        soi.sku = it.sku;
-        soi.quantity = it.quantity;
-        soi.unitprice = it.unitPrice;
-        soi.totalprice = Number((it.quantity * it.unitPrice).toFixed(2));
-        itemsEntities.push(soi);
-      }
-
-      // Create order
-      const so = new SalesOrder();
-      so.platformid = 1;      // To be updated
-      so.orderstatus = 'Paid';
-      so.items = itemsEntities;
-
-      const saved = await queryRunner.manager.save(so);
-
-      // Optional: reduce stock in ItemVariant and create inventory transactions
-      for (const it of itemsEntities) {
-        // example: decrement variant stock if you track it
-        // await queryRunner.manager.decrement(ItemVariant, { variantid: it.variantId }, 'qty', it.quantity);
-      }
-
-      await queryRunner.commitTransaction();
-      return await this.findOne(saved.salesorderid);
-    } catch (err) {
-      await queryRunner.rollbackTransaction();
-      throw err;
-    } finally {
-      await queryRunner.release();
+    // Create related items
+    if (items && items.length > 0) {
+      const orderItems = items.map((item) =>
+        this.salesOrderItemRepository.create({ ...item, order }),
+      );
+      await this.salesOrderItemRepository.save(orderItems);
+      order.items = orderItems;
     }
+
+    return order;
   }
 
-  async update(id: number, dto: any): Promise<SalesOrder> {
-    await this.soRepo.update(id, dto);
-    return this.findOne(id);
+  // Find all orders (with items)
+  async findAll(): Promise<SalesOrder[]> {
+    return this.salesOrderRepository.find({ relations: ['items'] });
   }
 
-  async remove(id: number): Promise<void> {
-    await this.soRepo.delete(id);
+  // Find one order by ID (with items)
+  async findOne(id: string): Promise<SalesOrder> {
+    const order = await this.salesOrderRepository.findOne({
+      where: { salesorderid: id },
+      relations: ['items'],  // <-- load related SalesOrderItem[]
+    });
+
+    if (!order) {
+      throw new Error('SalesOrder with ' + id + " not found");
+    }
+    return order;
+    // return this.salesOrderRepository.findOne({
+    //   where: { salesorderid: id },
+    //   relations: ['items'],
+    // });
+  }
+
+  // Update order details
+  async update(id: string, updateDto: UpdateSalesOrderDto): Promise<SalesOrder> {
+    const order = await this.salesOrderRepository.findOne({ where: { salesorderid: id } });
+    if (!order) throw new Error('Order not found');
+
+    Object.assign(order, updateDto);
+    return this.salesOrderRepository.save(order);
+  }
+
+  // Delete order (will also delete items if cascade: true)
+  async remove(id: string): Promise<void> {
+    await this.salesOrderRepository.delete(id);
   }
 }
