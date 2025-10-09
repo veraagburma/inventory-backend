@@ -73,4 +73,13 @@ export class SalesOrderService {
   async remove(id: string): Promise<void> {
     await this.salesOrderRepository.delete(id);
   }
+
+  async createBatch(orders: CreateSalesOrderDto[]) {
+    const createdOrders = [];
+    for (const order of orders) {
+      const created = await this.salesOrderRepository.save(order); 
+      createdOrders.push(created);
+    }
+    return createdOrders;
+  }
 }

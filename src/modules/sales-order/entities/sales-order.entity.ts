@@ -19,17 +19,34 @@ export class SalesOrder {
   @Column({ type: 'numeric', precision: 12, scale: 2 })
   shippingfee: number;
 
-  @Column({ type: 'numeric', precision: 12, scale: 2 })
-  sellerrebate: number;
+
+
 
   @Column({ type: 'numeric', precision: 12, scale: 2 })
-  platformrebate: number;
+  commissionfee : number;
 
   @Column({ type: 'numeric', precision: 12, scale: 2 })
-  bundlediscount: number;
+  servicefee : number;
+
+  @Column({ type: 'numeric', precision: 12, scale: 2 })
+  transactionfee : number;
+
+
 
   @Column({ type: 'numeric', precision: 12, scale: 2 })
   totalprice: number;
+
+  @Column({ type: 'numeric', precision: 12, scale: 2 })
+  sellerbundlediscount: number;
+
+  @Column({ type: 'numeric', precision: 12, scale: 2 })
+  platformbundlediscount: number;
+  
+  @Column({ type: 'numeric', precision: 12, scale: 2 })
+  platformvouchervalue: number;
+
+
+
 
   @Column()
   createdby: string;
