@@ -6,15 +6,19 @@ import { SalesOrder } from './entities/sales-order.entity';
 import { SalesOrderItem } from './entities/sales-order-item.entity';
 import { ItemVariant } from 'modules/item-variant/entities/itemvariant.entity';
 import { ItemModule } from 'modules/item/item.module';
+import { ItemVariantModule } from 'modules/item-variant/itemvariant.module';
 
 /* If there's Foreign Key, must declare both tables */
 @Module({
-  imports: [TypeOrmModule.forFeature([SalesOrder, SalesOrderItem, ItemVariant]),
+  imports: [TypeOrmModule.forFeature([SalesOrder, SalesOrderItem]),
     ItemModule,
+    ItemVariantModule     // if Entity already has a module, import module instead!!
   ],
 
   controllers: [SalesOrderController],
   providers: [SalesOrderService],
+  exports: [SalesOrderService],
 })
+
 export class SalesOrderModule {}
 
