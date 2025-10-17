@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, ConflictException } from '@nestjs/common';
+import { Injectable, NotFoundException, ConflictException, InternalServerErrorException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, DataSource } from 'typeorm';
 import { SalesOrder } from './entities/sales-order.entity';
@@ -41,14 +41,19 @@ export class SalesOrderService {
   }
 
   async findAllWithJoin() {
+    try {
+      const result = await this.salesOrderRepository
+        .createQueryBuilder('order')
+        .leftJoinAndSelect('order.items', 'item')
+        .leftJoinAndSelect('item.variant', 'variant')
+        .getMany();
 
-      try {
-      return await this.salesOrderRepository.find({
-        relations: ['items', 'items.variant'],
-      });
-    } catch (err) {
-      console.error('Join error:', err);
-      throw new Error('SalesOrder with joined not found');
+      console.log('✅ Joined result sample:', JSON.stringify(result, null, 2));
+      return result;
+    } catch (error: any) {
+        console.error('JOIN ERROR message:', error.message);
+        console.error('JOIN ERROR stack:', error.stack);
+        throw new InternalServerErrorException('SalesOrder with joined not found');
     }
   }
 

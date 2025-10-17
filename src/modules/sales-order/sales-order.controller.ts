@@ -13,18 +13,18 @@ export class SalesOrderController {
     return this.soService.findAll();
   }
 
+  @Get('joined')
+  findAllWithItems() {
+    console.log('==========> SalesOrderController findAllWithItems:');
+    // join SalesOrder + SalesOrderItem + ItemVariant/Inventory
+    return this.soService.findAllWithJoin();
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     console.log('==========> SalesOrderController findOne by ID:');
     return this.soService.findOne(id);
   } 
-
-  @Get('joined')
-  async findAllWithItems() {
-    console.log('==========> SalesOrderController findAllWithItems:');
-    // join SalesOrder + SalesOrderItem + ItemVariant/Inventory
-    return this.soService.findAllWithJoin();
-  }
 
   @Post()
   create(@Body() createDto: CreateSalesOrderDto) {

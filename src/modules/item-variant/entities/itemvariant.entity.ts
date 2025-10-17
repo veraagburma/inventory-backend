@@ -1,12 +1,12 @@
 
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, JoinColumn } from 'typeorm';
+import { Entity, Column, PrimaryColumn, ManyToOne, OneToMany, JoinColumn } from 'typeorm';
 import { Item } from '../../item/entities/item.entity'
 import { SalesOrderItem } from 'modules/sales-order/entities/sales-order-item.entity';
 
-@Entity('ItemVariant')
+@Entity('itemvariant')
 export class ItemVariant {
   
-  @PrimaryGeneratedColumn()
+  @PrimaryColumn()
   sku: string;
   
   @Column({ name: 'itemcode' })
@@ -34,8 +34,8 @@ export class ItemVariant {
   // @Column({ name: 'volume_cm3' })
   // volume_cm3: number;
 
-  @Column({ type: 'numeric', precision: 10, scale: 2 })
-  unitprice: number;
+  // @Column({ type: 'numeric', precision: 10, scale: 2 })
+  // unitprice: number;
 
   @Column({ name: 'itemremarks' })
   itemremarks: string;
