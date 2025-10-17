@@ -18,26 +18,6 @@ export class SalesOrderService {
     private readonly salesOrderItemRepository: Repository<SalesOrderItem>,
   ) {}
 
-  // Create a new Sales Order with items
-  async create(createDto: CreateSalesOrderDto): Promise<SalesOrder> {
-    const { items, ...orderData } = createDto;
-
-    // Create order
-    const order = this.salesOrderRepository.create(orderData);
-    await this.salesOrderRepository.save(order);
-
-    // Create related items
-    if (items && items.length > 0) {
-      const orderItems = items.map((item) =>
-        this.salesOrderItemRepository.create({ ...item, order }),
-      );
-      await this.salesOrderItemRepository.save(orderItems);
-      order.items = orderItems;
-    }
-
-    return order;
-  }
-
   // Find all orders (with items)
   async findAll(): Promise<SalesOrder[]> {
     return this.salesOrderRepository.find({ relations: ['items'] });
@@ -60,6 +40,47 @@ export class SalesOrderService {
     // });
   }
 
+  async findAllWithJoin() {
+
+      try {
+      return await this.salesOrderRepository.find({
+        relations: ['items', 'items.variant'],
+      });
+    } catch (err) {
+      console.error('Join error:', err);
+      throw new Error('SalesOrder with joined not found');
+    }
+  }
+
+  // Create a new Sales Order with items
+  async create(createDto: CreateSalesOrderDto): Promise<SalesOrder> {
+    const { items, ...orderData } = createDto;
+
+    // Create order
+    const order = this.salesOrderRepository.create(orderData);
+    await this.salesOrderRepository.save(order);
+
+    // Create related items
+    if (items && items.length > 0) {
+      const orderItems = items.map((item) =>
+        this.salesOrderItemRepository.create({ ...item, order }),
+      );
+      await this.salesOrderItemRepository.save(orderItems);
+      order.items = orderItems;
+    }
+
+    return order;
+  }
+
+  async createBatch(orders: CreateSalesOrderDto[]) {
+    const createdOrders = [];
+    for (const order of orders) {
+      const created = await this.salesOrderRepository.save(order); 
+      createdOrders.push(created);
+    }
+    return createdOrders;
+  }
+
   // Update order details
   async update(id: string, updateDto: UpdateSalesOrderDto): Promise<SalesOrder> {
     const order = await this.salesOrderRepository.findOne({ where: { salesorderid: id } });
@@ -72,14 +93,5 @@ export class SalesOrderService {
   // Delete order (will also delete items if cascade: true)
   async remove(id: string): Promise<void> {
     await this.salesOrderRepository.delete(id);
-  }
-
-  async createBatch(orders: CreateSalesOrderDto[]) {
-    const createdOrders = [];
-    for (const order of orders) {
-      const created = await this.salesOrderRepository.save(order); 
-      createdOrders.push(created);
-    }
-    return createdOrders;
   }
 }

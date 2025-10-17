@@ -1,6 +1,7 @@
 
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, JoinColumn } from 'typeorm';
 import { Item } from '../../item/entities/item.entity'
+import { SalesOrderItem } from 'modules/sales-order/entities/sales-order-item.entity';
 
 @Entity('ItemVariant')
 export class ItemVariant {
@@ -14,6 +15,9 @@ export class ItemVariant {
   @ManyToOne(() => Item, item => item.variants, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'itemcode', referencedColumnName: 'itemcode' })
   item: Item;
+
+  @OneToMany(() => SalesOrderItem, (item) => item.variant)
+  salesOrderItems: SalesOrderItem[];
 
   @Column({ name: 'size' })
   size: string;

@@ -15,13 +15,27 @@ export class SalesOrderController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    console.log('==========> SalesOrderController findOne:');
+    console.log('==========> SalesOrderController findOne by ID:');
     return this.soService.findOne(id);
+  } 
+
+  @Get('joined')
+  async findAllWithItems() {
+    console.log('==========> SalesOrderController findAllWithItems:');
+    // join SalesOrder + SalesOrderItem + ItemVariant/Inventory
+    return this.soService.findAllWithJoin();
   }
 
   @Post()
   create(@Body() createDto: CreateSalesOrderDto) {
     return this.soService.create(createDto);
+  }
+  
+  @Post('batch')
+  async createBatch(@Body() body: { orders: CreateSalesOrderDto[] }) {
+    console.log('createBatch => Received orders:', body.orders);
+    // console.log('Type of orders:', typeof body.orders);
+    return this.soService.createBatch(body.orders);
   }
 
   @Patch(':id')
@@ -33,13 +47,5 @@ export class SalesOrderController {
   remove(@Param('id') id: string) {
     return this.soService.remove(id);
   }
-
-  @Post('batch')
-  async createBatch(@Body() body: { orders: CreateSalesOrderDto[] }) {
-    console.log('createBatch => Received orders:', body.orders);
-    // console.log('Type of orders:', typeof body.orders);
-    return this.soService.createBatch(body.orders);
-  }
-
-  
+ 
 }

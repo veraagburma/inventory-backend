@@ -7,6 +7,13 @@ export class SalesOrder {
   @PrimaryColumn()
   salesorderid: string;
 
+    // should  call salesorderitem? 
+  @OneToMany(() => SalesOrderItem, (item) => item.order, {
+    cascade: true, // allow saving order with items in one call
+    eager: true,   // optional: auto-load items with order
+  })
+  items: SalesOrderItem[];
+
   @Column()
   platformid: number; 
 
@@ -46,8 +53,6 @@ export class SalesOrder {
   platformvouchervalue: number;
 
 
-
-
   @Column()
   createdby: string;
 
@@ -59,14 +64,6 @@ export class SalesOrder {
 
   @Column({ type: 'timestamp' })
   updateddate: Date;
-
-
-  // should  call salesorderitem? 
-  @OneToMany(() => SalesOrderItem, (item) => item.order, {
-    cascade: true, // allow saving order with items in one call
-    eager: true,   // optional: auto-load items with order
-  })
-  items: SalesOrderItem[];
 }
 
 
