@@ -8,5 +8,6 @@ import { ItemVariant } from './entities/itemvariant.entity';
   imports: [TypeOrmModule.forFeature([ItemVariant])],
   controllers: [ItemVariantController],
   providers: [ItemVariantService],
+  exports: [TypeOrmModule],   // ✅ Allow other modules to use ItemVariantRepository
 })
 export class ItemVariantModule {}
