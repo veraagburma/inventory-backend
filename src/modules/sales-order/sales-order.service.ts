@@ -41,15 +41,19 @@ export class SalesOrderService {
   }
 
   async findAllWithJoin() {
-    try {
-      const result = await this.salesOrderRepository
-        .createQueryBuilder('order')
-        .leftJoinAndSelect('order.items', 'item')
-        .leftJoinAndSelect('item.variant', 'variant')
-        .getMany();
 
-      console.log('✅ Joined result sample:', JSON.stringify(result, null, 2));
-      return result;
+    
+    try {
+      return await this.salesOrderRepository.find({
+        relations: ['items', 'items.variant'],
+      });
+      // const result = await this.salesOrderRepository
+      //   .createQueryBuilder('order')
+      //   .leftJoinAndSelect('order.items', 'item')
+      //   .leftJoinAndSelect('item.variant', 'variant')
+      //   .getMany();
+      //   console.log('Joined result sample:', JSON.stringify(result, null, 2));
+      // return result;
     } catch (error: any) {
         console.error('JOIN ERROR message:', error.message);
         console.error('JOIN ERROR stack:', error.stack);
@@ -79,11 +83,18 @@ export class SalesOrderService {
 
   async createBatch(orders: CreateSalesOrderDto[]) {
     const createdOrders = [];
-    for (const order of orders) {
-      const created = await this.salesOrderRepository.save(order); 
-      createdOrders.push(created);
+    
+    try {
+      for (const order of orders) {
+        const created = await this.salesOrderRepository.save(order); 
+        createdOrders.push(created);
+      }
+      return createdOrders;
     }
-    return createdOrders;
+    catch (error: any) {
+        console.error('JOIN ERROR message:', error.message);
+        console.error('JOIN ERROR stack:', error.stack);
+    }
   }
 
   // Update order details

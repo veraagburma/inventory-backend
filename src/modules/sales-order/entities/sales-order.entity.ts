@@ -47,10 +47,18 @@ export class SalesOrder {
   sellerbundlediscount: number;
 
   @Column({ type: 'numeric', precision: 12, scale: 2 })
+  sellervoucher: number;
+
+
+  @Column({ type: 'numeric', precision: 12, scale: 2 })
   platformbundlediscount: number;
   
   @Column({ type: 'numeric', precision: 12, scale: 2 })
   platformvouchervalue: number;
+
+
+  @Column({ type: 'numeric', precision: 12, scale: 2 })
+  creditcarddiscount: number;
 
 
   @Column()

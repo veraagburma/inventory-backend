@@ -33,7 +33,7 @@ export class SalesOrderController {
   
   @Post('batch')
   async createBatch(@Body() body: { orders: CreateSalesOrderDto[] }) {
-    console.log('createBatch => Received orders:', body.orders);
+    // console.log('createBatch => Received orders:', body.orders);
     // console.log('Type of orders:', typeof body.orders);
     return this.soService.createBatch(body.orders);
   }
