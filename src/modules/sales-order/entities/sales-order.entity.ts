@@ -37,7 +37,9 @@ export class SalesOrder {
 
   @Column({ type: 'numeric', precision: 12, scale: 2 })
   transactionfee : number;
-
+  
+  @Column({ type: 'numeric', precision: 12, scale: 2 })
+  shippingfeesaverprogramme: number;
 
 
   @Column({ type: 'numeric', precision: 12, scale: 2 })

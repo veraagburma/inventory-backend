@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Param, Body, Patch, Delete } from '@nestjs/common';
 import { SalesOrderService } from './sales-order.service';
 import { CreateSalesOrderDto } from './dto/create-sales-order.dto';
-import { UpdateSalesOrderDto } from './dto/update-sales-order.dto';
+
 
 @Controller('salesorder')
 export class SalesOrderController {
@@ -38,10 +38,10 @@ export class SalesOrderController {
     return this.soService.createBatch(body.orders);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() dto: UpdateSalesOrderDto) {
-    return this.soService.update(id, dto);
-  }
+  // @Patch(':id')
+  // update(@Param('id') id: string, @Body() dto: UpdateSalesOrderDto) {
+  //   return this.soService.update(id, dto);
+  // }
 
   @Delete(':id')
   remove(@Param('id') id: string) {

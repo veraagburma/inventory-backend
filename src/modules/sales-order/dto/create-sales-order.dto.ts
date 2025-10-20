@@ -17,8 +17,6 @@ export class CreateSalesOrderDto {
   @Type(() => CreateSalesOrderItemDto)
   items: CreateSalesOrderItemDto[];
 
-
-
   createdby?: string;
   @IsOptional()
   @IsDateString()
