@@ -27,7 +27,7 @@ export class PurchaseOrderItem {
   size: string;
 
   @Column()
-  colour: string;
+  color: string;
   
   @Column({ type: 'int' })
   subquantity: number;

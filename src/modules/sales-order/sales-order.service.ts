@@ -5,7 +5,7 @@ import { SalesOrder } from './entities/sales-order.entity';
 import { SalesOrderItem } from './entities/sales-order-item.entity';
 import { CreateSalesOrderDto } from './dto/create-sales-order.dto';
 import { ItemVariant } from '../item-variant/entities/itemvariant.entity'
-import { UpdateSalesOrderDto } from './dto/update-sales-order.dto';
+// import { UpdateSalesOrderDto } from './dto/update-sales-order.dto';
 
 @Injectable()
 
@@ -97,17 +97,17 @@ export class SalesOrderService {
     }
   }
 
-  // Update order details
-  async update(id: string, updateDto: UpdateSalesOrderDto): Promise<SalesOrder> {
-    const order = await this.salesOrderRepository.findOne({ where: { salesorderid: id } });
-    if (!order) throw new Error('Order not found');
+  // // Update order details
+  // async update(id: string, updateDto: UpdateSalesOrderDto): Promise<SalesOrder> {
+  //   const order = await this.salesOrderRepository.findOne({ where: { salesorderid: id } });
+  //   if (!order) throw new Error('Order not found');
 
-    Object.assign(order, updateDto);
-    return this.salesOrderRepository.save(order);
-  }
+  //   Object.assign(order, updateDto);
+  //   return this.salesOrderRepository.save(order);
+  // }
 
-  // Delete order (will also delete items if cascade: true)
-  async remove(id: string): Promise<void> {
-    await this.salesOrderRepository.delete(id);
-  }
+  // // Delete order (will also delete items if cascade: true)
+  // async remove(id: string): Promise<void> {
+  //   await this.salesOrderRepository.delete(id);
+  // }
 }

@@ -43,9 +43,9 @@ export class SalesOrderController {
   //   return this.soService.update(id, dto);
   // }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.soService.remove(id);
-  }
+  // @Delete(':id')
+  // remove(@Param('id') id: string) {
+  //   return this.soService.remove(id);
+  // }
  
 }

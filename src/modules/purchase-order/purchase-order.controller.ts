@@ -3,7 +3,7 @@ import { PurchaseOrderService } from './purchase-order.service';
 import { CreatePurchaseOrderDto } from './dto/create-purchase-order.dto';
 // import { UpdatePurchaseOrderDto } from './dto/update-purchase-order.dto';
 
-@Controller('salesorder')
+@Controller('purchaseorder')
 export class PurchaseOrderController {
   constructor(private readonly soService: PurchaseOrderService) {}
 

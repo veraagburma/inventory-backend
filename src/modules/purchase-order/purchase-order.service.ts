@@ -12,21 +12,21 @@ import { ItemVariant } from '../item-variant/entities/itemvariant.entity'
 export class PurchaseOrderService {
   constructor(
     @InjectRepository(PurchaseOrder)
-    private readonly salesOrderRepository: Repository<PurchaseOrder>,
+    private readonly purchaseOrderRepository: Repository<PurchaseOrder>,
 
     @InjectRepository(PurchaseOrderItem)
-    private readonly salesOrderItemRepository: Repository<PurchaseOrderItem>,
+    private readonly purchaseOrderItemRepository: Repository<PurchaseOrderItem>,
   ) {}
 
   // Find all orders (with items)
   async findAll(): Promise<PurchaseOrder[]> {
-    return this.salesOrderRepository.find({ relations: ['items'] });
+    return this.purchaseOrderRepository.find({ relations: ['items'] });
   }
 
 
   async findAllWithJoin() {
     try {
-      return await this.salesOrderRepository.find({
+      return await this.purchaseOrderRepository.find({
         relations: ['items', 'items.variant'],
       });
       // const result = await this.salesOrderRepository
@@ -48,7 +48,7 @@ export class PurchaseOrderService {
     
     try {
       for (const order of orders) {
-        const created = await this.salesOrderRepository.save(order); 
+        const created = await this.purchaseOrderRepository.save(order); 
         createdOrders.push(created);
       }
       return createdOrders;
