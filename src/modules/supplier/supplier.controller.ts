@@ -26,14 +26,14 @@ export class SupplierController {
     return this.supplierService.sortDetails(sort, order);
   }*/
 
-  @Get()
-  findOne(id: number): Promise<Supplier>  {
-    return this.supplierService.findOne(id);
-  }
+  // @Get()
+  // findOne(id: number): Promise<Supplier>  {
+  //   return this.supplierService.findOne(id);
+  // }
 
-  @Patch(':id')
-  update(@Param('id') id: number, @Body() updateDto: UpdateSupplierDto) {
-    updateDto.updateddate = new Date();
-    return this.supplierService.update(+id, updateDto);
-  }
+  // @Patch(':id')
+  // update(@Param('id') id: number, @Body() updateDto: UpdateSupplierDto) {
+  //   updateDto.updateddate = new Date();
+  //   return this.supplierService.update(+id, updateDto);
+  // }
 }

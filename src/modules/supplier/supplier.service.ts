@@ -18,37 +18,27 @@ export class SupplierService {
     return this.supplierRepository.save(supplier);
   }
 
-  /* Long form for create()
-  async create(createSupplierDto: CreateSupplierDto): Promise<Supplier> {
-    const supplier = new Supplier();
-    supplier.supplierName = createSupplierDto.supplierName;
-    supplier.supplierCName = createSupplierDto.supplierCName;
-    supplier.supplierAddress = createSupplierDto.supplierAddress;
-
-    return this.supplierRepository.save(supplier);
-  }*/
-
   async findAll(): Promise<Supplier[]> {
     return this.supplierRepository.find();
   }
 
-  async findOne(id: number): Promise<Supplier> {
-    const supplier = await this.supplierRepository.findOne({ where: { supplierid: id } });
-    if (!supplier) {
-      throw new NotFoundException(`Supplier with ID ${id} not found`);
-    }
-    return supplier;
-}
+//   async findOne(id: number): Promise<Supplier> {
+//     const supplier = await this.supplierRepository.findOne({ where: { supplierid: id } });
+//     if (!supplier) {
+//       throw new NotFoundException(`Supplier with ID ${id} not found`);
+//     }
+//     return supplier;
+// }
 
-  async update(id: number, updateDto: UpdateSupplierDto) {
-    // To prevent Created Date and By being updated
-    delete (updateDto as any).createddate;
-    delete (updateDto as any).createdby;
-    await this.supplierRepository.update(id, updateDto);
-    //return Promise<Supplier>;
-  }
+//   async update(id: number, updateDto: UpdateSupplierDto) {
+//     // To prevent Created Date and By being updated
+//     delete (updateDto as any).createddate;
+//     delete (updateDto as any).createdby;
+//     await this.supplierRepository.update(id, updateDto);
+//     //return Promise<Supplier>;
+//   }
 
-  async remove(id: number): Promise<void> {
-    await this.supplierRepository.delete(id);
-  }
+//   async remove(id: number): Promise<void> {
+//     await this.supplierRepository.delete(id);
+//   }
 }
