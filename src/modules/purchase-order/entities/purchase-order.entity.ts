@@ -14,10 +14,10 @@ export class PurchaseOrder {
   items: PurchaseOrderItem[];
   
   @Column()
-  supplierid: number;
+  supplier: string;
   
   @Column()
-  platformid: number; 
+  platform: number; 
 
   @Column({ type: 'timestamp' })
   podate: Date;
