@@ -1,11 +1,12 @@
 
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Entity, Column, PrimaryColumn, OneToMany } from 'typeorm';
 import { PurchaseOrderItem } from './purchase-order-item.entity'
 
 @Entity('purchaseorder')
 export class PurchaseOrder {
-  @PrimaryGeneratedColumn()
-  poid: number;
+  @PrimaryColumn()
+  ponumber: string;
+  // poid: number;
 
   @OneToMany(() => PurchaseOrderItem, (item) => item.order, {
     cascade: true, // allow saving order with items in one call
@@ -22,9 +23,6 @@ export class PurchaseOrder {
   @Column({ type: 'timestamp' })
   podate: Date;
   
-  @Column({ type: 'varchar', length: 20, default: 'Paid' })
-  ponumber: string;
-
   @Column({ type: 'numeric', precision: 12, scale: 2 })
   totalcostcny: number;
 

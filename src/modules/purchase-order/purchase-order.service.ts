@@ -45,6 +45,8 @@ export class PurchaseOrderService {
 
   async createBatch(orders: CreatePurchaseOrderDto[]) {
     const createdOrders = [];
+
+    // console.log(JSON.stringify(orders));
     
     try {
       for (const order of orders) {
