@@ -5,26 +5,31 @@ import { CreatePurchaseOrderDto } from './dto/create-purchase-order.dto';
 
 @Controller('purchaseorder')
 export class PurchaseOrderController {
-  constructor(private readonly soService: PurchaseOrderService) {}
+  constructor(private readonly purchaseOrderService: PurchaseOrderService) {}
 
   @Get()
   findAll() {
     console.log('==========> PurchaseOrderController findAll');
-    return this.soService.findAll();
+    return this.purchaseOrderService.findAll();
   }
 
   @Get('joined')
   findAllWithItems() {
     console.log('==========> PurchaseOrderController findAllWithItems:');
     // join PurchaseOrder + PurchaseOrderItem + ItemVariant/Inventory
-    return this.soService.findAllWithJoin();
+    return this.purchaseOrderService.findAllWithJoin();
   }
 
   @Post('batch')
   async createBatch(@Body() body: { orders: CreatePurchaseOrderDto[] }) {
-    // console.log('createBatch => Received orders:', body.orders);
-    // console.log('Type of orders:', typeof body.orders);
-    return this.soService.createBatch(body.orders);
+    // console.log('createBatch PO => Received orders:', body.orders);
+    return this.purchaseOrderService.createBatch(body.orders);
+  }
+
+  @Post('batchitem')
+  async createBatchItem(@Body() body: { orders: CreatePurchaseOrderDto[] }) {
+    // console.log('createBatch POItems => Received orders:', body.orders) ;
+    return this.purchaseOrderService.createBatchItem(body.orders);
   }
  
 }

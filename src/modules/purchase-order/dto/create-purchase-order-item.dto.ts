@@ -2,6 +2,7 @@ import { IsInt, IsNotEmpty, IsNumber, IsDateString, IsOptional} from 'class-vali
 
 export class CreatePurchaseOrderItemDto {
 
+  ponumber: string;
   sku: string;
 
   @IsInt()

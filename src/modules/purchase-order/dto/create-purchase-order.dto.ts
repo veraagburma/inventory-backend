@@ -3,6 +3,7 @@ import { Type } from 'class-transformer';
 import { CreatePurchaseOrderItemDto } from './create-purchase-order-item.dto';
 
 export class CreatePurchaseOrderDto {
+  ponumber: string;
   @IsOptional()
   platformId?: number;
   orderdate?: Date;

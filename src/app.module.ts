@@ -8,6 +8,7 @@ import { PlatformModule } from './modules/platform/platform.module';
 import { ItemModule } from './modules/item/item.module';
 import { ItemVariantModule } from './modules/item-variant/itemvariant.module';
 import { SalesOrderModule } from 'modules/sales-order/sales-order.module';
+import { PurchaseOrderModule } from 'modules/purchase-order/purchase-order.module';
 
 @Module({
 
@@ -18,6 +19,7 @@ import { SalesOrderModule } from 'modules/sales-order/sales-order.module';
     ItemModule,
     ItemVariantModule,
     SalesOrderModule,
+    PurchaseOrderModule
   ],
   controllers: [AppController]
   

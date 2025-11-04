@@ -9,11 +9,12 @@ export class PurchaseOrderItem {
   poitemid: number;
 
   @ManyToOne(() => PurchaseOrder, (order) => order.items, { onDelete: 'CASCADE', })
-  @JoinColumn({ name: 'poid' })
+  @JoinColumn({ name: 'ponumber' })
   order: PurchaseOrder;
   
   @Column()
-  poid: number;
+  ponumber: string;
+
 
   @ManyToOne(() => ItemVariant)
   @JoinColumn({ name: 'sku', referencedColumnName: 'sku' })

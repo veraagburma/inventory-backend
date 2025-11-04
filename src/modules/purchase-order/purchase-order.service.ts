@@ -16,6 +16,8 @@ export class PurchaseOrderService {
 
     @InjectRepository(PurchaseOrderItem)
     private readonly purchaseOrderItemRepository: Repository<PurchaseOrderItem>,
+
+    private readonly dataSource: DataSource,
   ) {}
 
   // Find all orders (with items)
@@ -61,4 +63,43 @@ export class PurchaseOrderService {
     }
   }
 
+
+  async createBatchItem(orders: CreatePurchaseOrderDto[]) {
+    const queryRunner = this.dataSource.createQueryRunner();
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+
+    try {
+      const results = [];
+
+      for (const orderDto of orders) {
+        // 🔹 1. Find existing PO by PO number
+        let existingPO = await queryRunner.manager.findOne(PurchaseOrder, {
+        where: { ponumber: orderDto.ponumber },
+      });
+
+      // 🔹 3. If PO items provided, create them
+      if (orderDto.items && orderDto.items.length > 0) {
+        console.log("-----------> createBatchItem " + existingPO?.ponumber);
+        for (const item of orderDto.items) {
+          const poItem = queryRunner.manager.create(PurchaseOrderItem, {
+          ...item,
+          purchaseorder: existingPO, // FK relationship
+        });
+          await queryRunner.manager.save(poItem);
+        }
+      }
+        results.push(existingPO);
+    }
+      await queryRunner.commitTransaction();
+      return results;
+  } catch (error: any) {
+    await queryRunner.rollbackTransaction();
+    console.error('JOIN ERROR message:', error.message);
+    console.error('JOIN ERROR stack:', error.stack);
+    throw new Error('Failed to create or update purchase orders');
+  } finally {
+    await queryRunner.release();
+  }
+  }
 }
