@@ -28,7 +28,7 @@ export class PurchaseOrderController {
 
   @Post('batchitem')
   async createBatchItem(@Body() body: { orders: CreatePurchaseOrderDto[] }) {
-    // console.log('createBatch POItems => Received orders:', body.orders) ;
+    console.log('createBatch POItems => Received orders:', body.orders) ;
     return this.purchaseOrderService.createBatchItem(body.orders);
   }
  

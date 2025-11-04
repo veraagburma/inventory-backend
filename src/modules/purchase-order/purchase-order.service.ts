@@ -80,7 +80,7 @@ export class PurchaseOrderService {
 
       // 🔹 3. If PO items provided, create them
       if (orderDto.items && orderDto.items.length > 0) {
-        console.log("-----------> createBatchItem " + existingPO?.ponumber);
+        console.log("-----------> createBatchItem existingPO: " + existingPO?.ponumber);
         for (const item of orderDto.items) {
           const poItem = queryRunner.manager.create(PurchaseOrderItem, {
           ...item,
