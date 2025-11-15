@@ -23,6 +23,12 @@ export class PurchaseOrder {
   @Column({ type: 'timestamp' })
   podate: Date;
   
+  @Column()
+  category: string;
+
+  @Column()
+  itemcode: string;
+
   @Column({ type: 'numeric', precision: 12, scale: 2 })
   totalcostcny: number;
 
@@ -36,8 +42,8 @@ export class PurchaseOrder {
   quantity: number;
 
   // To auto generate 
-  // @Column({ type: 'numeric', precision: 12, scale: 2 })
-  // unitcostperbatch: number; 
+  @Column({ type: 'numeric', precision: 12, scale: 2 })
+  unitcostperbatch: number; 
 
   @Column({ type: 'numeric', precision: 12, scale: 2 })
   shippingcost: number; // to auto generate? 
