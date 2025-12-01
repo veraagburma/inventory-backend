@@ -4,14 +4,8 @@ import { CreatePurchaseOrderItemDto } from './create-purchase-order-item.dto';
 
 export class CreatePurchaseOrderDto {
   ponumber: string;
-  @IsOptional()
-  platformId?: number;
-  orderdate?: Date;
-  orderstatus: string;
-  shippingfee: number;
-  sellerrebate: number;
-  platformrebate: number;
-  bundlediscount: number;
+  supplier: string;
+  suppliercname: string;
 
   @IsArray()
   @ValidateNested({ each: true })

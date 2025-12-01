@@ -5,7 +5,7 @@ import { PurchaseOrder } from './entities/purchase-order.entity';
 import { PurchaseOrderItem } from './entities/purchase-order-item.entity';
 import { CreatePurchaseOrderDto } from './dto/create-purchase-order.dto';
 import { ItemVariant } from '../item-variant/entities/itemvariant.entity'
-// import { UpdatePurchaseOrderDto } from './dto/update-purchase-order.dto';
+import { Supplier } from 'modules/supplier/entities/supplier.entity';
 
 @Injectable()
 
@@ -16,6 +16,9 @@ export class PurchaseOrderService {
 
     @InjectRepository(PurchaseOrderItem)
     private readonly purchaseOrderItemRepository: Repository<PurchaseOrderItem>,
+
+    @InjectRepository(Supplier)
+    private readonly supplierRepository: Repository<Supplier>,
 
     private readonly dataSource: DataSource,
   ) {}
@@ -52,6 +55,31 @@ export class PurchaseOrderService {
     
     try {
       for (const order of orders) {
+
+        console.log("Supplier name; " + order.supplier + " supplier cname: " + order.suppliercname);
+
+        let supplier = await this.supplierRepository.findOne({
+        where: { suppliername: order.supplier },
+        });
+
+        // 2. Create supplier only if not exists
+        if (!supplier) {
+          const newSupplier = new Supplier();
+          newSupplier.suppliername = order.supplier;
+          newSupplier.suppliercname = order.suppliercname;
+
+          // ensure creation was completed before moving on
+          const createdSupplier = await this.supplierRepository.save(newSupplier);
+
+          // this.supplierRepository.save(newSupplier);
+          console.log("Supplier NOT FOUND!!")
+        }
+        else {
+          console.log("Supplier! FOUND!!")
+        }
+
+
+
         const created = await this.purchaseOrderRepository.save(order); 
         createdOrders.push(created);
       }
