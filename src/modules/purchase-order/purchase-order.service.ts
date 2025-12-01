@@ -50,9 +50,6 @@ export class PurchaseOrderService {
 
   async createBatch(orders: CreatePurchaseOrderDto[]) {
     const createdOrders = [];
-
-    // console.log(JSON.stringify(orders));
-    
     try {
       for (const order of orders) {
 
@@ -77,8 +74,6 @@ export class PurchaseOrderService {
         else {
           console.log("Supplier! FOUND!!")
         }
-
-
 
         const created = await this.purchaseOrderRepository.save(order); 
         createdOrders.push(created);

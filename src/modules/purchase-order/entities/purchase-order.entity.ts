@@ -22,9 +22,12 @@ export class PurchaseOrder {
 
   @Column({ type: 'timestamp' })
   podate: Date;
-  
+
   @Column()
   category: string;
+
+  @Column()
+  subcategory: string;
 
   @Column()
   itemcode: string;
