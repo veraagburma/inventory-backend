@@ -34,7 +34,7 @@ export class SalesOrder {
   shippeddatetime: Date;
 
   @Column({ type: 'timestamp' })
-  deliveeddatetime: Date;
+  delivereddatetime: Date;
 
   @Column({ type: 'timestamp' })
   completeddatetime: Date;

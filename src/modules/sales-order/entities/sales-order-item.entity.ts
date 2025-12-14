@@ -24,7 +24,10 @@ export class SalesOrderItem {
   sku: string;
   
   @Column({ type: 'int' })
-  quantity: number;
+  qty: number;
+
+  @Column({ type: 'numeric', precision: 12, scale: 2 })
+  originalprice: number; // selling price
 
   @Column({ type: 'numeric', precision: 12, scale: 2 })
   unitprice: number; // selling price

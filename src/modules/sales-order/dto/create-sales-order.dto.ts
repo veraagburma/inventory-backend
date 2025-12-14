@@ -4,6 +4,7 @@ import { CreateSalesOrderItemDto } from './create-sales-order-item.dto';
 
 export class CreateSalesOrderDto {
   @IsOptional()
+  salesorderid: string;
   platformId?: number;
   orderdate?: Date;
   orderstatus: string;

@@ -74,6 +74,8 @@ export class SalesOrderService {
       const orderItems = items.map((item) =>
         this.salesOrderItemRepository.create({ ...item, order }),
       );
+
+      console.log("SO create -> " + order.salesorderid);
       await this.salesOrderItemRepository.save(orderItems);
       order.items = orderItems;
     }
@@ -86,6 +88,7 @@ export class SalesOrderService {
     
     try {
       for (const order of orders) {
+        console.log("SO create -> " + order.salesorderid);
         const created = await this.salesOrderRepository.save(order); 
         createdOrders.push(created);
       }
