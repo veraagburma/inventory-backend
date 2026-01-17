@@ -50,6 +50,12 @@ export class SalesOrder {
   shippingmethod: string;
 
   @Column({ type: 'numeric', precision: 12, scale: 2 })
+  shippingfeebybuyer: number;
+
+  @Column({ type: 'numeric', precision: 12, scale: 2 })
+  estimatedshippingfee: number;
+
+  @Column({ type: 'numeric', precision: 12, scale: 2 })
   shippingfee: number;
 
   @Column({ type: 'numeric', precision: 12, scale: 2 })
@@ -89,6 +95,8 @@ export class SalesOrder {
   @Column({ type: 'numeric', precision: 12, scale: 2 })
   sellerabsorbedvalue: number;
 
+  @Column()
+  note: string;
 
   @Column()
   createdby: string;
