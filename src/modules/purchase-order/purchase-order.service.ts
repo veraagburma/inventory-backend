@@ -52,9 +52,6 @@ export class PurchaseOrderService {
     const createdOrders = [];
     try {
       for (const order of orders) {
-
-        console.log("Supplier name; " + order.supplier + " supplier cname: " + order.suppliercname);
-
         let supplier = await this.supplierRepository.findOne({
         where: { suppliername: order.supplier },
         });
@@ -69,14 +66,16 @@ export class PurchaseOrderService {
           const createdSupplier = await this.supplierRepository.save(newSupplier);
 
           // this.supplierRepository.save(newSupplier);
-          console.log("Supplier NOT FOUND!!")
+          console.log("New Supplier!");
         }
         else {
-          console.log("Supplier! FOUND!!")
+          console.log("Existing Supplier");
         }
 
         const created = await this.purchaseOrderRepository.save(order); 
         createdOrders.push(created);
+
+        console.log( "Order: " + order.ponumber + " Supplier name; " + order.supplier + " Supplier CName: " + order.suppliercname);
       }
       return createdOrders;
     }
@@ -105,6 +104,7 @@ export class PurchaseOrderService {
       if (orderDto.items && orderDto.items.length > 0) {
         console.log("-----------> createBatchItem existingPO: " + existingPO?.ponumber);
         for (const item of orderDto.items) {
+          console.log("-----------> createBatchItem existingPO SKU: " + item.sku);
           const poItem = queryRunner.manager.create(PurchaseOrderItem, {
           ...item,
           purchaseorder: existingPO, // FK relationship

@@ -32,6 +32,9 @@ export class PurchaseOrder {
   @Column()
   itemcode: string;
 
+  @Column()
+  productdesc: string;
+
   @Column({ type: 'numeric', precision: 12, scale: 2 })
   totalcostcny: number;
 
