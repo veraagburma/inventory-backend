@@ -42,7 +42,10 @@ export class PurchaseOrder {
   totalcostsgd: number;
 
   @Column({ type: 'numeric', precision: 12, scale: 2 })
-  discount: number;
+  discountcny: number;
+
+  @Column({ type: 'numeric', precision: 12, scale: 2 })
+  discountsgd: number;
 
   @Column({ type: 'numeric', precision: 12, scale: 2 })
   quantity: number;

@@ -50,6 +50,7 @@ export class PurchaseOrderService {
 
   async createBatch(orders: CreatePurchaseOrderDto[]) {
     const createdOrders = [];
+    let count = 0;
     try {
       for (const order of orders) {
         let supplier = await this.supplierRepository.findOne({
@@ -66,17 +67,19 @@ export class PurchaseOrderService {
           const createdSupplier = await this.supplierRepository.save(newSupplier);
 
           // this.supplierRepository.save(newSupplier);
-          console.log("New Supplier!");
+          // console.log("New Supplier!");
         }
         else {
-          console.log("Existing Supplier");
+          // console.log("Existing Supplier");
         }
 
         const created = await this.purchaseOrderRepository.save(order); 
         createdOrders.push(created);
+        count = count + 1;
 
-        console.log( "Order: " + order.ponumber + " Supplier name; " + order.supplier + " Supplier CName: " + order.suppliercname);
+        console.log( "Order: " + order.ponumber + " Supplier name; " + order.supplier);
       }
+      console.log("==============> NUM OF RECORDS CREATED: " + count + "\n\n");
       return createdOrders;
     }
     catch (error: any) {
