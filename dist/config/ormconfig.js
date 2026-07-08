@@ -5,10 +5,9 @@ const dotenv = require("dotenv");
 dotenv.config();
 const isOffline = process.env.USE_SQLITE === 'true';
 exports.ormConfig = isOffline ? {
-    type: 'postgres',
+    type: 'sqlite',
     database: 'offline.db',
     entities: [__dirname + '/../**/*.entity{.ts,.js}'],
-    synchronize: true,
 } : {
     type: 'postgres',
     host: process.env.DATABASE_HOST,

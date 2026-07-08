@@ -6,10 +6,10 @@ dotenv.config();
 const isOffline = process.env.USE_SQLITE === 'true';
 
 export const ormConfig: TypeOrmModuleOptions = isOffline ? {
-  type: 'sqlite',
+  type: 'postgres',
   database: 'offline.db',
   entities: [__dirname + '/../**/*.entity{.ts,.js}'],
-  //synchronize: true,
+  synchronize: true,
 } : {
   type: 'postgres',
   host: process.env.DATABASE_HOST,
