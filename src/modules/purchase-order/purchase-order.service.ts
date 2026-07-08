@@ -1,10 +1,16 @@
 import { Injectable, NotFoundException, ConflictException, InternalServerErrorException } from '@nestjs/common';
+
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, DataSource } from 'typeorm';
+
+
 import { PurchaseOrder } from './entities/purchase-order.entity';
 import { PurchaseOrderItem } from './entities/purchase-order-item.entity';
+import { PurchaseOrderSnap } from './entities/purchase-order-snap.entity';
+// import { PurchaseReturn } from './entities/purchase-return.entity';
+// import { ItemVariant } from '../item-variant/entities/itemvariant.entity'
+
 import { CreatePurchaseOrderDto } from './dto/create-purchase-order.dto';
-import { ItemVariant } from '../item-variant/entities/itemvariant.entity'
 import { Supplier } from 'modules/supplier/entities/supplier.entity';
 
 @Injectable()
@@ -16,6 +22,9 @@ export class PurchaseOrderService {
 
     @InjectRepository(PurchaseOrderItem)
     private readonly purchaseOrderItemRepository: Repository<PurchaseOrderItem>,
+
+    @InjectRepository(PurchaseOrderSnap)
+    private readonly poSnapRepository: Repository<PurchaseOrderSnap>,
 
     @InjectRepository(Supplier)
     private readonly supplierRepository: Repository<Supplier>,
@@ -128,4 +137,10 @@ export class PurchaseOrderService {
     await queryRunner.release();
   }
   }
+
+  async findPOSnap() {
+    console.log('==========> PurchaseOrderService findPOSnap (Getting ALL records)');
+    return this.poSnapRepository.find();
+  }
+
 }

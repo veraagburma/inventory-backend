@@ -1,7 +1,10 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+
 import { PurchaseOrder } from './entities/purchase-order.entity';
 import { PurchaseOrderItem } from './entities/purchase-order-item.entity';
+import { PurchaseOrderSnap } from './entities/purchase-order-snap.entity';
+
 import { PurchaseOrderController } from './purchase-order.controller';
 import { PurchaseOrderService } from './purchase-order.service';
 import { ItemModule } from 'modules/item/item.module';
@@ -10,7 +13,7 @@ import { SupplierModule } from 'modules/supplier/supplier.module';
 
 /* If there's Foreign Key, must declare both tables */
 @Module({
-  imports: [TypeOrmModule.forFeature([PurchaseOrder, PurchaseOrderItem]),
+  imports: [TypeOrmModule.forFeature([PurchaseOrder, PurchaseOrderItem, PurchaseOrderSnap]),
     ItemModule,
     ItemVariantModule,    // if Entity already has a module, import module instead!!
     SupplierModule

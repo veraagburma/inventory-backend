@@ -20,16 +20,26 @@ export class PurchaseOrderController {
     return this.purchaseOrderService.findAllWithJoin();
   }
 
-  @Post('batch')
+  @Post('pobatch')
   async createBatch(@Body() body: { orders: CreatePurchaseOrderDto[] }) {
     // console.log('createBatch PO => Received orders:', body.orders);
     return this.purchaseOrderService.createBatch(body.orders);
   }
 
-  @Post('batchitem')
+  // batch creation of PO Items, currently not in use
+  // [8 Jul 2026] Only PO in DB for now.
+  // PO Items are in BigSeller.
+  @Post('poitembatch')
   async createBatchItem(@Body() body: { orders: CreatePurchaseOrderDto[] }) {
     console.log('createBatch POItems => Received orders:', body.orders) ;
     return this.purchaseOrderService.createBatchItem(body.orders);
+  }
+
+  @Post('posnap')
+  async getPOSnap() {
+    console.log('==========> PurchaseOrderController findPOSnap:');
+    // Pass the orders array to your service to query the POSnap table
+    return this.purchaseOrderService.findPOSnap();
   }
  
 }
