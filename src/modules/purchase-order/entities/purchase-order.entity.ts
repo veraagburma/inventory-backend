@@ -69,6 +69,33 @@ export class PurchaseOrder {
   @Column()
   remarks: string;
 
+
+  
+  // Purchase Order Return / Refund
+
+  @Column({ type: 'timestamp' })
+  returndate: Date;
+
+  @Column({ type: 'numeric', precision: 12, scale: 2 })
+  returnquantity: number;
+
+  @Column({ type: 'numeric', precision: 12, scale: 2 })
+  refundamountsgd: number;
+
+  @Column({ type: 'numeric', precision: 12, scale: 2 })
+  refundamountcny: number;
+
+  @Column({ type: 'timestamp' })
+  returnshippingdate: Date;
+
+  @Column({ type: 'numeric', precision: 12, scale: 2 })
+  returnshippingcost: number; // to auto generate? 
+
+  @Column()
+  reason: string;
+
+
+
   @Column()
   createdby: string;
 
