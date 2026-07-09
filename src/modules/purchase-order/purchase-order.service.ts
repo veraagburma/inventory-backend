@@ -140,7 +140,22 @@ export class PurchaseOrderService {
 
   async findPOSnap() {
     console.log('==========> PurchaseOrderService findPOSnap (Getting ALL records)');
-    return this.poSnapRepository.find();
+
+    // 1. Get all column names dynamically from TypeORM's metadata
+    const allColumns = this.poSnapRepository.metadata.columns.map(
+      (col) => col.propertyName
+    );
+
+    // 2. Filter out 'id' (or any other columns you want to hide)
+    // Hiding 'id' because it was added for Entity sake, don't need ID in POSnap
+    const columnsToSelect = allColumns.filter(
+      (col) => col !== 'id'
+    ) as (keyof PurchaseOrderSnap)[];
+
+    // 3. Query the database using our dynamic array
+    return this.poSnapRepository.find({
+      select: columnsToSelect,
+    });
   }
 
 }
